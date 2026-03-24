@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8 keeper">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether Chronometer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="space-bg">
+        <div class="stars"></div>
+        <div class="nebula-1"></div>
+        <div class="nebula-2"></div>
+    </div>
+
+    <main class="ui-wrapper">
+
+        <div class="main-orb-container">
+            <div class="chrono-glow"></div>
+            <div class="chronometer" id="display">
+                00:00<span>.00</span>
+            </div>
+
+            <div class="orbit-controls">
+                <button id="startBtn" onclick="startTimer()" title="Start">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button id="pauseBtn" onclick="pauseTimer()" title="Pause" disabled>
+                    <i class="fas fa-pause"></i>
+                </button>
+                <button id="lapBtn" onclick="recordLap()" title="Lap" disabled>
+                    <i class="fas fa-flag"></i>
+                </button>
+                <button id="resetBtn" class="reset-icon" onclick="resetTimer()" title="Reset">
+                    <i class="fas fa-undo"></i>
+                </button>
+            </div>
+        </div>
+
+        <aside class="lap-log">
+            <div class="lap-log-header">
+                <h3>Aether Laps</h3>
+                <span class="pulse-indicator" id="status">IDLE</span>
+            </div>
+            <div class="lap-list" id="laps">
+            </div>
+        </aside>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

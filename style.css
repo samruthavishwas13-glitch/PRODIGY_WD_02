@@ -1,0 +1,316 @@
+/* --- Root Vars & Reset --- */
+
+:root {
+    --core-cyan: rgba(0, 242, 255, 1);
+    --soft-cyan: rgba(0, 242, 255, 0.2);
+    --accent-purple: rgba(112, 0, 255, 0.6);
+    --bg-deep: #020205;
+    --text: #e0faff;
+    --font-chrono: 'Chivo Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-deep);
+    color: var(--text);
+    height: 100vh;
+    font-family: var(--font-chrono);
+    overflow: hidden;
+    /* Prevents scrollbars from breaking the parallax effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* --- Deep Space Background Layers --- */
+
+.space-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+
+/* Generating stars with a CSS technique */
+
+.stars {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    box-shadow: 10vw 20vh white, 50vw 10vh white, 80vw 30vh white, 20vw 80vh white, 90vw 90vh white, 60vw 60vh white;
+    opacity: 0.5;
+    animation: starTwinkle 5s infinite alternate;
+}
+
+.nebula-1,
+.nebula-2 {
+    position: absolute;
+    border-radius: 50%;
+}
+
+
+/* Moving organic glow fields */
+
+.nebula-1 {
+    width: 600px;
+    height: 600px;
+    top: -100px;
+    right: -100px;
+    background: radial-gradient(circle, var(--accent-purple) 0%, rgba(0, 0, 0, 0) 70%);
+    opacity: 0.3;
+    animation: orbDrift 20s infinite alternate;
+}
+
+.nebula-2 {
+    width: 400px;
+    height: 400px;
+    bottom: -50px;
+    left: -50px;
+    background: radial-gradient(circle, var(--soft-cyan) 0%, rgba(0, 0, 0, 0) 70%);
+    opacity: 0.2;
+    animation: orbDrift 15s infinite alternate-reverse;
+}
+
+
+/* --- UI Wrapper --- */
+
+.ui-wrapper {
+    position: relative;
+    width: 90vw;
+    max-width: 1200px;
+    height: 80vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* --- The Central Chrono Orb --- */
+
+.main-orb-container {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chrono-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--soft-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 40px var(--soft-cyan);
+    animation: pulseGlow 4s infinite ease-in-out;
+}
+
+.chronometer {
+    font-size: 5rem;
+    font-weight: 200;
+    letter-spacing: -2px;
+    color: var(--core-cyan);
+    text-shadow: 0 0 15px var(--core-cyan);
+}
+
+.chronometer span {
+    font-size: 2.5rem;
+    opacity: 0.5;
+    font-weight: 100;
+}
+
+
+/* Controls integrated into the 'orbit' */
+
+.orbit-controls {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.orbit-controls button {
+    background: none;
+    border: 1px solid var(--soft-cyan);
+    color: var(--core-cyan);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(5px);
+}
+
+.orbit-controls button:hover:not(:disabled) {
+    background: var(--soft-cyan);
+    box-shadow: 0 0 15px var(--core-cyan);
+    transform: scale(1.1);
+}
+
+.orbit-controls button:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+.reset-icon {
+    color: #ff4b2b !important;
+    border-color: rgba(255, 75, 43, 0.2) !important;
+}
+
+.reset-icon:hover {
+    background: rgba(255, 75, 43, 0.1) !important;
+    box-shadow: 0 0 15px #ff4b2b !important;
+}
+
+
+/* --- The Lap Log --- */
+
+.lap-log {
+    width: 350px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.lap-log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 10px;
+}
+
+.lap-log h3 {
+    font-size: 1.1rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.pulse-indicator {
+    font-size: 0.7rem;
+    color: var(--accent-purple);
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.pulse-indicator.active {
+    color: var(--core-cyan);
+    animation: textPulse 1s infinite alternate;
+}
+
+.lap-list {
+    height: 60vh;
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+
+/* Hide scrollbar by default, show on hover */
+
+.lap-list::-webkit-scrollbar {
+    width: 4px;
+    opacity: 0;
+}
+
+.lap-list:hover::-webkit-scrollbar {
+    opacity: 1;
+}
+
+.lap-list::-webkit-scrollbar-thumb {
+    background: var(--soft-cyan);
+    border-radius: 2px;
+}
+
+.lap-item {
+    padding: 12px 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    display: flex;
+    justify-content: space-between;
+    transition: background 0.2s;
+    font-size: 0.9rem;
+}
+
+.lap-item:hover {
+    background: rgba(0, 242, 255, 0.05);
+}
+
+.lap-item .lap-meta {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 100;
+}
+
+.lap-item .lap-time {
+    color: #fff;
+    font-weight: 400;
+}
+
+
+/* --- KEYFRAMES / ANIMATIONS --- */
+
+@keyframes starTwinkle {
+    0% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes orbDrift {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(20px, 30px);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 20px var(--soft-cyan);
+        border-color: rgba(0, 242, 255, 0.1);
+    }
+    50% {
+        box-shadow: 0 0 60px var(--soft-cyan);
+        border-color: rgba(0, 242, 255, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 20px var(--soft-cyan);
+        border-color: rgba(0, 242, 255, 0.1);
+    }
+}
+
+@keyframes textPulse {
+    0% {
+        opacity: 0.5;
+        text-shadow: none;
+    }
+    100% {
+        opacity: 1;
+        text-shadow: 0 0 10px var(--core-cyan);
+    }
+}
